@@ -1,6 +1,6 @@
 ## =========================
-## 1) СТАДИЯ РАЗРАБОТКИ (development)
-## =========================
+# 1) СТАДИЯ РАЗРАБОТКИ (development)
+# =========================
 #FROM node:18-slim AS dev
 #
 #WORKDIR /app
@@ -53,6 +53,9 @@
 #CMD ["nginx", "-g", "daemon off;"]
 # frontend/Dockerfile (пример уже у вас)
 
+
+
+###################
 # 1) STAGE: build
 FROM node:18-slim AS build
 

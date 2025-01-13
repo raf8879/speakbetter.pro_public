@@ -1,26 +1,32 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 import { confirmPasswordReset } from "@/services/authReset";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const tokenFromURL = searchParams.get("token") || ""; // /reset-password?token=...
-  
-  const [token, setToken] = useState(tokenFromURL);
+
+  const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [infoMsg, setInfoMsg] = useState("");
 
   useEffect(() => {
-    // Если нет token в URL, выводим ошибку
-    if (!tokenFromURL) {
-      setErrorMsg("No reset token in URL.");
+    // В режиме `next export` код рендерится статически,
+    // но внутри браузера (после загрузки) `useEffect` сработает
+    // и мы сможем вытащить ?token=... из URL (client-side).
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      const t = url.searchParams.get("token") || "";
+      if (!t) {
+        setErrorMsg("No reset token in URL. Please check your link.");
+      }
+      setToken(t);
     }
-  }, [tokenFromURL]);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -28,40 +34,48 @@ export default function ResetPasswordPage() {
     setInfoMsg("");
 
     if (!token) {
-      setErrorMsg("Missing token");
+      setErrorMsg("Missing token in URL");
       return;
     }
-    try {
-      // POST /api/auth/password-reset/confirm/
-      // body: { token, password, password_confirm }
-      const resp = await confirmPasswordReset(token, password, passwordConfirm);
-      // resp: { message: "Password has been reset. You can now login." }
-      setInfoMsg(resp.message || "Password reset success. You can login now.");
 
-      // Например, через 2 секунды после успеха можно перекинуть на логин
-      // setTimeout(() => router.push("/login"), 2000);
-    } catch (err: any) {
-      setErrorMsg(err.response?.data?.error || err.message);
+    try {
+      // вызываем confirmPasswordReset(token, password, passwordConfirm)
+      const resp = await confirmPasswordReset(token, password, passwordConfirm);
+      setInfoMsg(resp.message || "Password reset success. You can now login.");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setErrorMsg(err.response?.data?.error || err.message);
+      } else if (err instanceof Error) {
+        setErrorMsg(err.message);
+      } else {
+        setErrorMsg(String(err));
+      }
     }
   }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 px-4">
-      <div className="
-        w-full max-w-sm
-        bg-white dark:bg-gray-800
-        rounded-lg
-        shadow-md
-        p-8
-      ">
-        <h2 className="
-          text-center text-3xl font-greatvibes bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
-                  text-transparent bg-clip-text hover:opacity-90 transition-opacity
-        ">
+      <div
+        className="
+          w-full max-w-sm
+          bg-white dark:bg-gray-800
+          rounded-lg
+          shadow-md
+          p-8
+        "
+      >
+        <h2
+          className="
+            text-center text-3xl font-greatvibes 
+            bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
+            text-transparent bg-clip-text 
+            hover:opacity-90 transition-opacity
+          "
+        >
           Reset Your Password
         </h2>
 
-        {/* Ошибка или информационное сообщение */}
+        {/* Ошибки / инфо */}
         {errorMsg && (
           <p className="text-red-600 dark:text-red-400 mb-2 text-center">
             {errorMsg}
@@ -75,7 +89,6 @@ export default function ResetPasswordPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-6">
           <div>
-           {/*  <label className="block mb-1 font-semibold text-sm">New Password:</label> */}
             <input
               className="
                 w-full border border-gray-300 dark:border-gray-600 
@@ -93,7 +106,6 @@ export default function ResetPasswordPage() {
           </div>
 
           <div>
-            {/* <label className="block mb-1 font-semibold text-sm">Confirm Password:</label> */}
             <input
               className="
                 w-full border border-gray-300 dark:border-gray-600 
@@ -114,8 +126,9 @@ export default function ResetPasswordPage() {
             type="submit"
             className="
               w-full py-2 mt-2
-             bg-gradient-to-r from-purple-500 via-pink-400 to-blue-400
-              text-white font-semibold rounded
+              bg-gradient-to-r from-purple-500 via-pink-400 to-blue-400
+              text-white font-semibold 
+              rounded 
               hover:opacity-90 transition
             "
           >
@@ -123,7 +136,7 @@ export default function ResetPasswordPage() {
           </button>
         </form>
 
-        {/* Кнопка «Назад» (необязательно) */}
+        {/* Кнопка «Back to Login» (необязательно) */}
         <button
           onClick={() => router.push("/login")}
           className="
