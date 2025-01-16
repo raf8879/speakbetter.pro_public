@@ -9,7 +9,7 @@ python-dotenv==1.0.1
 redis==5.2.1
 sqlparse==0.5.3
 tzdata==2024.2
-
+gunicorn
 
 annotated-types==0.7.0
 anyio==4.7.0
@@ -28,7 +28,7 @@ tqdm==4.67.1
 typing_extensions==4.12.2
 openai-whisper
 pyttsx3
-#torch
+torch
 #TTS==0.15.1
 #textgrid
 
@@ -40,7 +40,7 @@ TTS
 #g2p-en
 #torch
 #python-Levenshtein
-#torchaudio
+torchaudio
 
 django-cors-headers
 

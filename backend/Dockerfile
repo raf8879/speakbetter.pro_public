@@ -312,12 +312,13 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir --default-timeout=1000 -r requirements.txt
+#RUN python -c "from TTS.api import TTS; TTS(model_name='tts_models/en/vctk/vits')"
 
 # Если нужны модели nltk, PyTorch, TTS, etc., они должны быть в requirements.txt
 # (Или install torch + coqui TTS, whisPer... уже у вас прописано).
 
 # Скопируем весь проект
 COPY . /app
-
+RUN python manage.py collectstatic --noinput
 # В продакшене используем Gunicorn
-CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4", "--timeout", "120"]
+CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4", "--timeout", "300"]

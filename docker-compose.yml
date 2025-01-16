@@ -117,7 +117,8 @@ services:
       # Если хотим Whisper/TTS локальное - no external,
       # or if partially we have local model + GPT
       DEBUG: "False"  # в settings.py
-      ALLOWED_HOSTS: "speakbetter.pro"
+    volumes:
+      - static_volume:/app/staticfiles 
       # etc...
 
   frontend:
@@ -128,9 +129,10 @@ services:
     depends_on:
       - backend
     ports:
-      - "8080:80"
+      - "8080:3000"
     # в продакшене не монтируем volumes
     # volumes: ...
 
 volumes:
   db_data:
+  static_volume:

@@ -7,7 +7,7 @@ export function setOnLogoutCallback(fn: () => void) {
 }
 
 export const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://speakbetter.pro",
   withCredentials: true, // чтобы куки (в т.ч. refresh) передавались автоматически
 });
 

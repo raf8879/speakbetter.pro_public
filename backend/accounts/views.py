@@ -1,4 +1,4 @@
-#accounts/view
+3#accounts/view
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -79,7 +79,7 @@ class RegisterView(APIView):
         token = str(confirm_obj.token)
 
         # Формируем ссылку (FRONTEND_URL возьмите из .env или settings)
-        frontend_url = getattr(settings, 'FRONTEND_URL', 'http://localhost:3000')
+        frontend_url = getattr(settings, 'FRONTEND_URL', 'https://speakbetter.pro')
         verify_link = f"{frontend_url}/verify-email?token={token}"
 
         # Отправляем email
@@ -362,7 +362,7 @@ from django.contrib.auth import get_user_model
 from .models import PasswordResetToken
 
 User = get_user_model()
-FRONTEND_URL = getattr(settings, 'FRONTEND_URL', 'http://localhost:3000')
+FRONTEND_URL = getattr(settings, 'FRONTEND_URL', 'https://speakbetter.pro')
 
 class RequestResetPasswordView(APIView):
     """
@@ -391,7 +391,7 @@ class RequestResetPasswordView(APIView):
 
         # Если нашли user, создаём новый токен.
         reset_obj = PasswordResetToken.objects.create(user=user)
-        reset_url = f"http://localhost:3000/reset-password?token={reset_obj.token}"
+        reset_url = f"http://speakbetter.pro/reset-password?token={reset_obj.token}"
 
 
         subject = "Reset your password"
