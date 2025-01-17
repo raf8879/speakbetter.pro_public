@@ -60,7 +60,7 @@ export default function RegisterPage() {
       await registerUser(username, password, email);
       // Успешно → показываем сообщение и тут же переходим на /login
       setInfo("User created. Please check your email for a confirmation link.");
-      router.push("/login");
+      router.push("/check-email");
     } catch (err: any) {
       // Если бэкенд вернёт ошибку (например, пользователь уже существует)
       setError(err.response?.data?.error || "Register error");

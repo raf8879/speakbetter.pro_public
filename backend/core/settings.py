@@ -83,7 +83,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_THROTTLE_RATES': {
         'login': '10/minute',
-        'anon': '100/day',  # гости
+        'anon': '250/day',  # гости
         'user': '1000/day',  # авторизованные
     },
     'DEFAULT_AUTHENTICATION_CLASSES': [
