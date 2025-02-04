@@ -30,4 +30,4 @@ media/
 .DS_Store
 Thumbs.db
 
-db_backup.sql/
+db_backup.sql
