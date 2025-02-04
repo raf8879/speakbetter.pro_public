@@ -5,11 +5,6 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { api } from "@/services/api";
 
-/**
- * Страница: список "chat topics" в виде карточек с дизайном
- * — Градиентный баннер, адаптивная сетка.
- * — При клике на карточку → start chat, далее router.push("/chat/<topic>").
- */
 export default function ChatTopicsPage() {
   const router = useRouter();
 

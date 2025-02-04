@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { api } from "@/services/api";
 
 interface ChatMessage {
-  role: string; // "user" | "assistant" | "system"
+  role: string; //
   content: string;
 }
 
@@ -102,10 +102,9 @@ export default function ChatTopicPage() {
           Chat: {topic}
         </h2>
 
-        <div className="w-6" /> {/* Пустышка для выравнивания */}
+        <div className="w-6" />
       </header>
 
-      {/* Ошибка */}
       {errorMsg && (
         <div className="bg-red-200 text-red-700 text-sm p-2">{errorMsg}</div>
       )}
@@ -138,7 +137,7 @@ export default function ChatTopicPage() {
             );
           })}
 
-          {/* Бот печатает */}
+
           {botTyping && (
             <div className="mb-2 flex flex-col self-start">
               <div
@@ -154,7 +153,6 @@ export default function ChatTopicPage() {
           )}
         </div>
 
-        {/* Поле ввода внизу */}
         <div
           className="
             absolute bottom-0 w-full
@@ -187,7 +185,6 @@ export default function ChatTopicPage() {
               rounded-r
             "
           >
-            {/* Иконка «самолётик» */}
             <svg
               xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"

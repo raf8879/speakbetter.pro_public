@@ -1,5 +1,3 @@
-
-
 import "./globals.css";
 import React from "react";
 
@@ -15,8 +13,7 @@ import Footer from "@/components/Footer";
 import Notifications from "@/components/Notifications";
 console.log("DEBUG: NotificationsProvider =", NotificationsProvider);
 console.log("DEBUG: AuthProvider =", AuthProvider);
-/** 
- * Метаданные Next.js 13+ (опционально)
+/**
  */
 export const metadata = {
   title: "SpeakBetter",
@@ -32,7 +29,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {
-   /*        Пример подключения Google Fonts (если нужно): */
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
@@ -42,43 +38,23 @@ export default function RootLayout({
 
       <body
         className={
-          // Базовый фон/цвет:
+          //
           "bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 " +
-          // Заполняем всю высоту, чтобы футер был «прижат» внизу
+          //
           "flex flex-col min-h-screen"
         }
       >
         <ThemeProvider>
           <NotificationsProvider>
             <AuthProvider>
-              {/* Шапка (авторизация, приветствие и т.д.) */}
               <HeaderAuth />
 
-              {/*
-                Основной контейнер: слева — меню, справа — контент
-                flex-1: растягивает на оставшуюся высоту
-              */}
               <div className="flex flex-1">
-                {/*
-                  Сайдбар:
-                  - скрыт на мобильных (hidden), показывается при md (md:block)
-                  - фиксированная ширина w-64
-                  - Добавим "p-4" — небольшой отступ
-                  - Можем добавить "space-y-4" между элементами
-                  - "overflow-y-auto", если пунктов будет много
-                */}
+
                 <aside className="hidden md:block w-64 bg-gray-100 dark:bg-gray-800 p-4 overflow-y-auto shadow-sm">
-                  <h3 className="text-2xl mb-2 font-mono italic bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 text-transparent bg-clip-text"
-            /*       style={{ fontFamily: '"Great Vibes", cursive' }} */>
+                  <h3 className="text-2xl mb-2 font-mono italic bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 text-transparent bg-clip-text">
                     Course Catalog
                   </h3>
-
-                  {/*
-                    "Плиточный" вид: мы хотим, чтобы каждый пункт выглядел как мини-карточка.
-                    - Пусть <ul> / <li> будет отвечать за «плитки».
-                    - Внутри каждой «плитки» сделаем hover-эффект: 
-                      масштабирование + лёгкая тень.
-                  */}
                   <ul className="space-y-3">
                     <li>
                       <a
@@ -94,8 +70,7 @@ export default function RootLayout({
                         `}
                         >
                           <span className="text-xl font-mono italic  mb-2 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 
-                          text-transparent bg-clip-text"
-                         /*  style={{ fontFamily: '"Great Vibes", cursive' }} */>
+                          text-transparent bg-clip-text">
                           Pronunciation
                           </span>
                       </a>
@@ -114,8 +89,7 @@ export default function RootLayout({
                         `}
                       >
                         <span className="text-xl font-mono italic mb-2 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 
-                          text-transparent bg-clip-text"
-                  /*         style={{ fontFamily: '"Great Vibes", cursive' }} */>
+                          text-transparent bg-clip-text">
                           Conversation
                           </span>              
                       </a>
@@ -134,8 +108,7 @@ export default function RootLayout({
                         `}
                       >
                         <span className="text-xl font-mono italic mb-2 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 
-                          text-transparent bg-clip-text"
-                     /*      style={{ fontFamily: '"Great Vibes", cursive' }} */>
+                          text-transparent bg-clip-text">
                           Chat
                           </span>  
                       </a>
@@ -154,27 +127,18 @@ export default function RootLayout({
                         `}
                       >
                         <span className="text-xl font-mono italic mb-2 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 
-                          text-transparent bg-clip-text"
-                         /*  style={{ fontFamily: '"Great Vibes", cursive' }} */>
+                          text-transparent bg-clip-text">
                           Exercises
                           </span> 
                       </a>
                     </li>
-
-                    {/* Добавляйте при необходимости... */}
                   </ul>
                 </aside>
-
-                {/* Основной контент (children) */}
                 <main className="flex-1 p-4 overflow-auto">
                   {children}
                 </main>
               </div>
-
-              {/* Футер (внизу) */}
               <Footer />
-
-              {/* Всплывающие уведомления (toast) */}
               <Notifications />
             </AuthProvider>
           </NotificationsProvider>

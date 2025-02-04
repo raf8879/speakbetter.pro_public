@@ -7,16 +7,12 @@ import { verifyEmail } from "@/services/auth";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
-
-  // Вместо useSearchParams — вручную достаём "?token=" из URL:
   const [token, setToken] = useState("");
 
   const [info, setInfo] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Код в useEffect срабатывает только на клиенте, 
-    // поэтому при statically exported у Next не будет проблем.
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       const t = url.searchParams.get("token") || "";
@@ -40,7 +36,6 @@ export default function VerifyEmailPage() {
       await verifyEmail(token);
       setInfo("Email verified. You can now login.");
     } catch (err: unknown) {
-      // Убираем any, проверяем axios-ошибку:
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.error || "Verification error");
       } else if (err instanceof Error) {
@@ -62,7 +57,6 @@ export default function VerifyEmailPage() {
           p-8
         "
       >
-        {/* Заголовок */}
         <h2
           className="
             text-center text-3xl font-greatvibes 
@@ -73,9 +67,6 @@ export default function VerifyEmailPage() {
         >
           Verify Your Email
         </h2>
-
-        {/* Ошибка если не нашли токен */}
-        {/* error / info */}
         {error && (
           <p className="text-red-600 mt-4 text-center">
             {error}
@@ -86,8 +77,6 @@ export default function VerifyEmailPage() {
             {info}
           </p>
         )}
-
-        {/* Кнопка Verify (если есть token) */}
         {token && (
           <button
             onClick={handleVerify}

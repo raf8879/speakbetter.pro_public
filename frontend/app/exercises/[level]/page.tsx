@@ -161,7 +161,6 @@ export default function ExercisesByLevelPage() {
             <p className="text-gray-600 mb-2">
               Type: <strong>{ex.exercise_type}</strong>
             </p>
-            {/* Здесь можно ещё выводить ex.text (коротко) или ex.creator, если нужно */}
           </motion.div>
         ))}
       </section>

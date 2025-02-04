@@ -37,9 +37,7 @@ export default function VoiceConversationPage() {
   const [errorMsg, setErrorMsg] = useState("");
   const [assistantTyping, setAssistantTyping] = useState(false);
 
-  // ========= Для Play/Pause аудио ==============
-  // audioRef — будем хранить текущий Audio-объект
-  // playingUrl — URL аудио, которое сейчас играет (чтобы знать, какое сообщение отображать с иконкой "pause")
+
   const [playingUrl, setPlayingUrl] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -81,8 +79,6 @@ export default function VoiceConversationPage() {
       if (resp.assistant_audio_b64) {
         const audioUrl = createAudioUrlFromBase64(resp.assistant_audio_b64);
         assistantMsg.audioUrl = audioUrl;
-        // Пытаемся авто-проиграть
-        // Но только если нет другой записи
         if (!audioRef.current) {
           const audio = new Audio(audioUrl);
           audioRef.current = audio;

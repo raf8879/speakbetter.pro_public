@@ -4,13 +4,10 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-import { api } from "@/services/api";        // axios with { withCredentials:true }
+import { api } from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
 
-/**
- * Страница Pronunciation Levels + карточка "Practice Words".
- * Все элементы объединены в одну сетку «плиток».
- */
+
 export default function PronunciationLevelsPage() {
   const router = useRouter();
   const { user, isLoading } = useAuth();
@@ -19,14 +16,13 @@ export default function PronunciationLevelsPage() {
   const [loadingLevels, setLoadingLevels] = useState(true);
 
   useEffect(() => {
-    if (isLoading) return; // ждём, пока AuthContext загрузит user
+    if (isLoading) return;
     if (!user) {
-      // не авторизован → на /register
       router.push("/register");
       return;
     }
 
-    // Загружаем levels
+
     api
       .get("/api/pronunciation/levels/")
       .then((res) => {
@@ -40,7 +36,7 @@ export default function PronunciationLevelsPage() {
       });
   }, [isLoading, user, router]);
 
-  // Если профиль ещё грузится:
+
   if (isLoading || loadingLevels) {
     return (
       <div className="p-6">
@@ -49,7 +45,7 @@ export default function PronunciationLevelsPage() {
     );
   }
 
-  // Если ошибка
+
   if (error) {
     return (
       <div className="p-6">
@@ -58,12 +54,11 @@ export default function PronunciationLevelsPage() {
     );
   }
 
-  // Если user==null, но мы не успели редиректнуть, то возвратим null
+
   if (!user) return null;
 
   return (
     <main className="flex flex-col min-h-screen">
-      {/* Шапка c плавным градиентом (аналогично главной) */}
       <section
         className="
           w-full
@@ -84,8 +79,6 @@ export default function PronunciationLevelsPage() {
           the words you struggle with the most.
         </p>
       </section>
-
-      {/* Сетка карточек: уровни + practice words */}
       <section
         className="
           max-w-6xl mx-auto
@@ -116,21 +109,8 @@ export default function PronunciationLevelsPage() {
             <p className="text-gray-700 flex-1">
               Practice reading exercises and get immediate feedback for {lvl} level.
             </p>
-{/*             <div className="mt-4">
-              <span className="
-                inline-block px-4 py-2
-                text-white
-                rounded
-                bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
-                text-sm
-              ">
-                Start {lvl}
-              </span>
-            </div> */}
           </motion.div>
         ))}
-
-        {/* Карточка «Practice Words» */}
         <motion.div
           className="
             bg-white rounded-lg shadow p-6
@@ -151,17 +131,6 @@ export default function PronunciationLevelsPage() {
           <p className="text-gray-700 flex-1">
             Focus on the words you often mispronounce. Improve them until perfect!
           </p>
-{/*           <div className="mt-4">
-            <span className="
-              inline-block px-4 py-2
-              text-white
-              rounded
-              bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
-              text-sm
-            ">
-              Go
-            </span>
-          </div> */}
         </motion.div>
       </section>
     </main>

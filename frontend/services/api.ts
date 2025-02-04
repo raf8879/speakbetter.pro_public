@@ -8,7 +8,7 @@ export function setOnLogoutCallback(fn: () => void) {
 
 export const api = axios.create({
   baseURL: "https://speakbetter.pro",
-  withCredentials: true, // чтобы куки (в т.ч. refresh) передавались автоматически
+  withCredentials: true, /
 });
 
 let isRefreshing = false;
@@ -24,8 +24,6 @@ function onRefreshed(success: boolean) {
 
 async function refreshToken() {
   console.log("[api] Attempting refresh");
-  // Шлём POST /api/token/refresh/ без тела —
-  // бэкенд возьмёт refresh_token из куки
   const resp = await api.post("/api/token/refresh/");
   console.log("[api] Refresh OK");
   return resp;
@@ -36,9 +34,6 @@ async function doLogout() {
   onLogoutCallback(); 
 }
 
-// =============================
-// Интерсептор
-// =============================
 api.interceptors.response.use(
   (response) => response,
   async (error) => {

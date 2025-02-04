@@ -1,22 +1,15 @@
-// components/SemiCircleGauge.tsx
 "use client";
 
 import React from "react";
 import { motion } from "framer-motion";
 
-/**
- * Свойства:
- *   value: число 0..100
- *   width, height: размеры SVG (width=200, height=100 по умолчанию)
- *   colorFrom, colorTo: например, "red" → "green"
- *   label?: текстовая подпись
- */
+
 interface SemiCircleGaugeProps {
   value: number;
   width?: number;
   height?: number;
-  colorFrom?: string; 
-  colorTo?: string; 
+  colorFrom?: string;
+  colorTo?: string;
   label?: string;
 }
 
@@ -30,11 +23,8 @@ export default function SemiCircleGauge({
 }: SemiCircleGaugeProps) {
   const clampedValue = Math.max(0, Math.min(100, value));
 
-  // Рассчёт длины дуги (полукруга). Полная окружность ~ π * 2 * R.
-  // Для полукруга ~ π * R. У нас R = (width - stroke)/2. Упростим:
-  const circumference = Math.PI * (width - 10); // stroke=10 условно
+  const circumference = Math.PI * (width - 10);
 
-  // strokeDashoffset = (100 - clampedValue)/100 * circumference
   const offset = ((100 - clampedValue) / 100) * circumference;
 
   return (
@@ -78,10 +68,7 @@ export default function SemiCircleGauge({
   );
 }
 
-/** 
- * Генерация дуги (здесь ~полукруг) с помощью startAngle/endAngle
- * Источник (адаптация): https://stackoverflow.com/questions/5736398/
- */
+
 function describeArc(cx: number, cy: number, r: number, startAngle: number, endAngle: number) {
   const start = polarToCartesian(cx, cy, r, endAngle);
   const end   = polarToCartesian(cx, cy, r, startAngle);

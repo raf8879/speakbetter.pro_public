@@ -1,4 +1,3 @@
-// services/authVerify.ts
 import { api } from "./api";
 
 export async function verifyEmail(userId: string, code: string) {

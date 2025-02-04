@@ -62,12 +62,8 @@ export default function ForgotPasswordPage() {
             Send Reset Link
           </button>
         </form>
-
-        {/* Информационное сообщение или ошибка */}
         {infoMsg && <p className="text-green-600 mt-4 text-center">{infoMsg}</p>}
         {errorMsg && <p className="text-red-600 mt-4 text-center">{errorMsg}</p>}
-
-        {/* Ссылка «Back to Login» */}
         <button
           onClick={() => router.push("/login")}
           className=" mt-4 inline-block text-blue-600  hover:underline text-sm"

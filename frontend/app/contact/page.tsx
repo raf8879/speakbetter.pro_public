@@ -20,32 +20,3 @@ export default function ContactPage() {
         </p>
         
       </section>
-
-{/*       <section>
-        <h2 className="text-xl font-semibold mb-2">GitHub</h2>
-        <p>
-          Want to see the source code or report an issue? Visit our
-          <a
-            href="https://github.com/YourUsername/YourRepo"
-            target="_blank"
-            rel="noreferrer"
-            className="underline ml-1"
-          >
-            GitHub repository
-          </a>.
-        </p>
-      </section> */}
-
-{/*       <section>
-        <h2 className="text-xl font-semibold mb-2">Feedback Form</h2>
-        <p>
-          Prefer using a form? Fill out our quick
-          <a href="/feedback-form" className="underline ml-1">
-            feedback form
-          </a>.
-        </p>
-      </section> */}
-      
-    </main>
-  );
-}

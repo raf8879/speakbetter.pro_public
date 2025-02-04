@@ -5,7 +5,6 @@ import { api } from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-// yarn add react-confetti
 import Confetti from "react-confetti";
 
 interface AchievementData {
@@ -32,7 +31,6 @@ export default function GamificationStatsPage() {
       setLoading(false);
       return;
     }
-    // user is present => загружаем gamification stats
     api
       .get("/api/stats/my")
       .then((res) => {

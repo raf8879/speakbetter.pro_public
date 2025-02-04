@@ -6,8 +6,6 @@ import { api } from "@/services/api";
 import { trainWord } from "@/services/wordTraining";
 import { useAuth } from "@/context/AuthContext";
 import { useNotifications } from "@/context/NotificationsContext";
-
-// Динамический импорт, чтобы избежать проблем SSR с медиа
 const ReactMediaRecorder = dynamic(
   () => import("react-media-recorder").then((mod) => mod.ReactMediaRecorder),
   { ssr: false }

@@ -12,10 +12,6 @@ interface Exercise {
   level: string;
 }
 
-/**
- * Отображает список упражнений (exList) в стиле «плиток».
- * Данные грузим по уровню (level).
- */
 export default function ExercisesByLevelPage() {
   const router = useRouter();
   const params = useParams();
@@ -27,16 +23,12 @@ export default function ExercisesByLevelPage() {
   const { user, isLoading } = useAuth(); // AuthContext: user, isLoading
 
   useEffect(() => {
-    // Пока идёт загрузка AuthContext, не делаем запрос
     if (isLoading) return;
-
-    // Если user===null => не авторизован → редирект
     if (!user) {
       router.push("/login");
       return;
     }
 
-    // Грузим упражнения: /api/pronunciation/exercises/?level=...
     api
       .get(`/api/pronunciation/exercises/?level=${encodeURIComponent(level)}`)
       .then((res) => {
@@ -50,7 +42,6 @@ export default function ExercisesByLevelPage() {
       });
   }, [level, router, user, isLoading]);
 
-  // Пока грузим AuthContext или список упражнений
   if (isLoading || loading) {
     return (
       <div className="p-4">
@@ -59,7 +50,6 @@ export default function ExercisesByLevelPage() {
     );
   }
 
-  // Если произошла ошибка
   if (error) {
     return (
       <div className="p-4">
@@ -68,12 +58,10 @@ export default function ExercisesByLevelPage() {
     );
   }
 
-  // Если user==null (редирект уже происходит), здесь просто null:
   if (!user) return null;
 
   return (
     <main className="p-4 flex flex-col min-h-screen">
-      {/* Заголовок / шапка */}
       <section
         className="
           mb-6 text-center
@@ -94,8 +82,6 @@ export default function ExercisesByLevelPage() {
           Choose an exercise below to practice your pronunciation skills.
         </p>
       </section>
-
-      {/* Сетка «карточек» упражнений */}
       <section
         className="
           grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
@@ -126,18 +112,6 @@ export default function ExercisesByLevelPage() {
             <p className="text-gray-600">
               Level: <strong>{ex.level}</strong>
             </p>
-
-            {/* Кнопка/стикер внизу карточки */}
-{/*             <span
-              className="
-                mt-auto inline-block px-3 py-1
-                bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
-                text-white rounded text-sm
-                w-fit
-              "
-            >
-              Open
-            </span> */}
           </motion.div>
         ))}
       </section>

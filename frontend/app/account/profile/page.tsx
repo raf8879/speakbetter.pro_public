@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 
 import { getMyProfile, updateMyProfile, deleteAccount } from "@/services/user";
 
-/** Простейшая модалка */
 function Modal({
   open,
   onClose,
@@ -27,7 +26,6 @@ function Modal({
           bg-black bg-opacity-30
         "
       >
-        {/* Клик по фону - закрывает */}
         <div className="absolute inset-0" onClick={onClose} />
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}

@@ -2,15 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import {  useMotionValue, animate } from "framer-motion";
-
-/**
- * CircleGaugeProps:
- * - value: число 0..100 (процент)
- * - size: диаметр круга (px)
- * - strokeWidth: толщина обводки (px)
- * - gradientId: уникальный id для <defs> (если в одном месте несколько диаграмм)
- * - label?: string; Подпись под диаграммой (например "Accuracy")
- */
 interface CircleGaugeProps {
   value: number;          // 0..100
   size?: number;          // px

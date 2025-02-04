@@ -1,6 +1,3 @@
-
-
-// my-esl-frontend/app/stats/page.tsx
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -14,15 +11,12 @@ export default function StatsPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Проверяем, есть ли токен
     const access = localStorage.getItem("accessToken");
     if (!access) {
-      // нет токена -> редирект на /login
       router.push("/login");
       return;
     }
 
-    // Загружаем stats
     api.get("/api/pronunciation/stats/")
       .then(res => {
         setStats(res.data);

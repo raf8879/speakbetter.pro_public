@@ -1,11 +1,7 @@
-// components/GradientDiamondLink.tsx
 "use client";
 import Link from "next/link";
 import React from "react";
 
-/**
- * Градиентная кнопка-ссылка с анимированным «алмазом» (sparkle).
- */
 export default function GradientDiamondLink({
   href,
   children,
@@ -35,7 +31,6 @@ export default function GradientDiamondLink({
         `}
         style={{ marginTop: "-4px" }}
       />
-      {/* Чтобы текст не перекрывался алмазом, сам текст тоже в <span> */}
       <span className="relative">{children || "Sign Up Now"}</span>
     </Link>
   );

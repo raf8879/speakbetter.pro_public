@@ -1,71 +1,4 @@
-  # можно убрать версию, если предупреждает, что obsolete
-
-#services:
-#  db:
-#    image: postgres:13
-#    environment:
-#      POSTGRES_DB: esl_db
-#      POSTGRES_USER: esl_user
-#      POSTGRES_PASSWORD: 1234
-#    ports:
-#      - "5432:5432"
-#    healthcheck:
-#      test: ["CMD-SHELL", "pg_isready -U esl_user -d esl_db -h localhost"]
-#      interval: 5s
-#      timeout: 5s
-#      retries: 5
-#    # Добавляем монтирование volume:
-#    volumes:
-#      - db_data:/var/lib/postgresql/data
-#
-#  redis:
-#    image: redis:latest
-#    ports:
-#      - "6379:6379"
-#
-#  backend:
-#    build: ./backend
-##    command: conda run -n aligner python -u manage.py runserver 0.0.0.0:8000
-#    command: python manage.py runserver 0.0.0.0:8000
-#    ports:
-#      - "8000:8000"
-#    depends_on:
-#      db:
-#        condition: service_healthy
-#      redis:
-#        condition: service_started
-#    environment:
-#      DB_NAME: esl_db
-#      DB_USER: esl_user
-#      DB_PASSWORD: 1234
-#      DB_HOST: db
-#      DB_PORT: 5432
-#      REDIS_HOST: redis
-#      REDIS_PORT: 6379
-#    volumes:
-#      - ./backend:/app
-#
-#  frontend_dev:
-#    build:
-#      context: ./frontend
-#      target: dev
-#    container_name: my_frontend_dev
-#    ports:
-#      - "3000:3000"
-#    volumes:
-#      - ./frontend:/app
-#    depends_on:
-#      - backend
-## Объявляем volume в нижней секции:
-#volumes:
-#  db_data:
-
-
-
-
-
-
-services:
+ services:
   db:
     image: postgres:13
     environment:
@@ -79,16 +12,9 @@ services:
       retries: 5
     volumes:
       - db_data:/var/lib/postgresql/data
-    # В продакшене можно не публиковать порт, т.к. всё внутри docker net
-    # ports:
-    #  - "5432:5432"
 
   redis:
     image: redis:latest
-    # Аналогично, можно не публиковать порт:
-    # ports:
-    #  - "6379:6379"
-
   backend:
     build:
       context: ./backend
@@ -104,7 +30,6 @@ services:
       - ./backend/.env
 
     environment:
-      # Django
       DB_NAME: esl_db
       DB_USER: esl_user
       DB_PASSWORD: 1234
@@ -112,27 +37,18 @@ services:
       DB_PORT: 5432
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      # Учитываем GPT:
-#      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      # Если хотим Whisper/TTS локальное - no external,
-      # or if partially we have local model + GPT
-      DEBUG: "False"  # в settings.py
+      DEBUG: "False"
     volumes:
-      - static_volume:/app/staticfiles 
-      # etc...
+      - static_volume:/app/staticfiles
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-#      target: prod
     depends_on:
       - backend
     ports:
       - "8080:3000"
-    # в продакшене не монтируем volumes
-    # volumes: ...
-
 volumes:
   db_data:
   static_volume:

@@ -15,7 +15,6 @@ export default function ExercisesIndexPage() {
 
   return (
     <main className="flex flex-col min-h-screen">
-      {/* Градиентная «шапка» */}
       <section
         className="
           w-full

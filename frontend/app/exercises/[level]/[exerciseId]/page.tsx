@@ -22,8 +22,6 @@ export default function ExerciseDetailPage() {
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
-
-  // answers: { gap1: "...", gap2: "..." }
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [result, setResult] = useState<SubmitResult | null>(null);
 
@@ -32,7 +30,6 @@ export default function ExerciseDetailPage() {
     fetchExerciseById(exerciseId)
       .then((ex) => {
         setExercise(ex);
-        // Инициализируем answers (по количеству blanks)
         const initAns: Record<string, string> = {};
         ex.blanks.forEach((b) => {
           initAns[b.blank_key] = "";
@@ -46,7 +43,7 @@ export default function ExerciseDetailPage() {
       });
   }, [exerciseId]);
 
-  // Вводим или выбираем ответ
+
   function handleChange(blankKey: string, value: string) {
     setAnswers((prev) => ({ ...prev, [blankKey]: value }));
   }
@@ -82,13 +79,6 @@ export default function ExerciseDetailPage() {
     }
   }
 
-  /**
-   * Рендерим текст упражнения:
-   * - Ищем в тексте маркеры "__gap1__"
-   * - Заменяем их на <input> или <select>
-   * - Если есть result, подсвечиваем текст (green/red)
-   * - Сами поля делаем «невидимыми» (без рамки), но с тонкой нижней линией (при желании).
-   */
   function renderTextWithInputs(text: string) {
     if (!exercise) return text; // fallback
 
@@ -270,10 +260,8 @@ export default function ExerciseDetailPage() {
           text-transparent bg-clip-text
         "
       >
-{/*         {exercise.title} - {exercise.level} ({exercise.exercise_type}) */}
       </h2>
 
-      {/* Основное текстовое поле упражнения */}
       <div
         className="
           flex-1 flex items-center justify-center

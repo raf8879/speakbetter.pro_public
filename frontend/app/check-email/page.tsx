@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-// import { resendConfirmationEmail } from "@/services/auth"; // Если у вас есть такой endpoint
 
 export default function CheckEmailPage() {
   const router = useRouter();
@@ -13,8 +12,7 @@ export default function CheckEmailPage() {
     setInfo("");
     setError("");
     try {
-      // Если есть endpoint для повторной отправки подтверждения, вызовите его:
-      // await resendConfirmationEmail();
+
       setInfo("A new confirmation email was sent. Please check your inbox.");
     } catch (err: any) {
       setError("Failed to resend confirmation email.");

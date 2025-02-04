@@ -1,4 +1,3 @@
-// frontend/services/conversation.ts
 import { api } from "./api";
 
 // Список тем

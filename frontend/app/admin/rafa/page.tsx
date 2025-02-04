@@ -12,7 +12,7 @@ import {
   Legend,
 } from "chart.js";
 
-// Нужно «регистрировать» компоненты для chart.js
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export default function AdminDashboardPage() {
@@ -38,11 +38,11 @@ export default function AdminDashboardPage() {
   if (errorMsg) return <p style={{ color: "red", padding: 20 }}>{errorMsg}</p>;
   if (!data) return <p style={{ padding: 20 }}>No data.</p>;
 
-  // data.mode_counts = { "pronunciation":150, "chat":210, "conversation":180, "tasks":100 }
+
   const modeLabels = Object.keys(data.mode_counts);
   const modeValues = Object.values(data.mode_counts);
 
-  // Пример данных для графика Bar
+
   const chartData = {
     labels: modeLabels,
     datasets: [

@@ -1,7 +1,3 @@
-
-
-
-// services/conversationApi.ts
 import { api } from "./api";
 
 // 1) GET /api/conversation/topics/
@@ -28,6 +24,5 @@ export async function sendConversationAudio(convId: string|number, file: File) {
   const formData = new FormData();
   formData.append("audio", file);
   const res = await api.post(`/api/conversation/${convId}/`, formData);
-  // { transcript, assistant_text, assistant_audio_b64 }
   return res.data;
 }

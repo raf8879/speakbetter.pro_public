@@ -1,10 +1,6 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-/**
- * Для удобства: boolean-флаг isDark.
- * Или хранить "light"/"dark" (type Theme = "light"|"dark").
- */
 interface ThemeContextType {
   isDark: boolean;
   toggleTheme: () => void;

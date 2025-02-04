@@ -1,4 +1,3 @@
-// frontend/services/stats.ts
 import { api } from "./api";
 
 export interface UserStatsData {

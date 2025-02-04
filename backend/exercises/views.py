@@ -1,8 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Exercise
 from .serializers import ExerciseSerializer
 from accounts.permissions import IsTeacher
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.db.models import Avg, Count
+from .models import Exercise, ExerciseAttempt
 
 
 class ExerciseViewSet(ModelViewSet):
@@ -27,13 +30,6 @@ class ExerciseViewSet(ModelViewSet):
         return [IsAuthenticated()]
 
 
-
-# exercises/views_stats.py
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from django.db.models import Avg, Count
-from .models import Exercise, ExerciseAttempt
-# from stats.models import EventLog
 class ExerciseStatsView(APIView):
     """
     GET /api/exercises/stats/

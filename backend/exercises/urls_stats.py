@@ -1,4 +1,3 @@
-# exercises/urls_stats.py (или вместе с вашим router)
 from django.urls import path
 from .views import ExerciseStatsView
 

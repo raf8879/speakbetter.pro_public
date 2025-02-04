@@ -1,73 +1,3 @@
-/* "use client";
-
-import React from "react";
-import Link from "next/link";
-
-export default function HomePage() {
-  const accessToken = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
-
-  return (
-    <div className="p-4">
-      <h1 className="text-2xl">Welcome to ESL Pronunciation</h1>
-      {accessToken ? (
-        <p>You are logged in!</p>
-      ) : (
-        <p>You are a guest (not logged in)</p>
-      )}
-
-      <ul className="list-disc ml-4 mt-4">
-        <li>
-          <Link href="/stats">My Progress</Link>
-        </li>
-        <li>
-          <Link href="/levels">Practice Reading (Choose level)</Link>
-        </li>
-        <li>
-          <Link href="/login">Login</Link> or <Link href="/register">Register</Link>
-        </li>
-      </ul>
-    </div>
-  );
-} */
-
-
-
-// my-esl-frontend/app/page.tsx
-/* import React from "react";
-import Link from "next/link";
-
-export default function HomePage() {
-  return (
-    <div style={{ padding: 20 }}>
-      <h1>Welcome to ESL Platform</h1>
-      <p>This is the homepage / root page</p>
-      <ul style={{ marginTop: 8 }}>
-        <li><Link href="/login">Login</Link></li>
-        <li><Link href="/register">Register</Link></li>
-        <li><Link href="/dashboard">Go to Dashboard</Link></li>
-      </ul>
-    </div>
-  );
-}  */
-
-
-
-// app/page.tsx
-/* import React from "react";
-import Link from "next/link";
-
-export default function HomePage() {
-  return (
-    <div style={{ padding:20 }}>
-      <h1>Welcome to ESL Platform</h1>
-      <ul style={{ marginTop:10 }}>
-        <li><Link href="/dashboard">Dashboard</Link></li>
-        <li><Link href="/pronunciation/levels">Pronunciation mode</Link></li>
-      </ul>
-    </div>
-  );
-} */
-
 "use client";
 
 import React from "react";
@@ -75,17 +5,10 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 
-/**
- * Главная страница ("/")
- * - Использует AuthContext для определения, залогинен ли пользователь (user != null).
- * - Если user === null → показываем кнопки "Get Started" / "Sign Up Now".
- * - Если user !== null → показываем "Go to My Account".
- */
+
 export default function HomePage() {
   const { user, isLoading } = useAuth();
 
-  // 1) Если ещё грузится (запрос /api/auth/me), избегаем «моргания»
-  //
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -94,12 +17,11 @@ export default function HomePage() {
     );
   }
 
-  // user===null => не авторизован
+
   const isLoggedIn = !!user;
 
   return (
     <main className="flex flex-col min-h-screen">
-      {/* Hero Section */}
       <section
         className="relative flex flex-col items-center justify-center
                    text-center p-8 pt-16 pb-20
@@ -125,8 +47,6 @@ export default function HomePage() {
           Improve your pronunciation, grammar, and communication skills
           through real-life scenarios and instant feedback.
         </motion.p>
-
-        {/* Кнопка "Get Started" или "Go to My Account" */}
         <div className="mt-6">
           {!isLoggedIn ? (
             <Link
@@ -148,9 +68,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Основной контент-карточки */}
       <section className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Card 1: Pronunciation */}
         <motion.div
           className="bg-white rounded-lg shadow p-6 flex flex-col hover:shadow-lg transition-shadow"
           whileHover={{ scale: 1.03 }}
@@ -169,8 +87,6 @@ export default function HomePage() {
             Practice Pronunciation
           </Link>
         </motion.div>
-
-        {/* Card 2: Conversation */}
         <motion.div
           className="bg-white rounded-lg shadow p-6 flex flex-col hover:shadow-lg transition-shadow"
           whileHover={{ scale: 1.03 }}
@@ -189,8 +105,6 @@ export default function HomePage() {
             Start Conversation
           </Link>
         </motion.div>
-
-        {/* Card 3: Chat */}
         <motion.div
           className="bg-white rounded-lg shadow p-6 flex flex-col hover:shadow-lg transition-shadow"
           whileHover={{ scale: 1.03 }}
@@ -209,8 +123,6 @@ export default function HomePage() {
             Open Chat
           </Link>
         </motion.div>
-
-        {/* Card 4: Exercises */}
         <motion.div
           className="bg-white rounded-lg shadow p-6 flex flex-col hover:shadow-lg transition-shadow"
           whileHover={{ scale: 1.03 }}
@@ -230,8 +142,6 @@ export default function HomePage() {
           </Link>
         </motion.div>
       </section>
-
-      {/* Блок о преимуществах */}
       <section className="max-w-4xl mx-auto px-4 mb-16 text-center">
         <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 
                  text-transparent bg-clip-text">Why SpeakBetter?</h2>
@@ -241,8 +151,6 @@ export default function HomePage() {
           <li>Instant pronunciation checks and corrections</li>
           <li>Detailed progress tracking and insights</li>
         </ul>
-
-        {/* Показываем "Sign Up Now", если не залогинен */}
         {!isLoggedIn && (
           <Link
             href="/register"
@@ -253,24 +161,6 @@ export default function HomePage() {
           </Link>
         )}
       </section>
-
-      {/* Футер */}
-      {/* <footer className="bg-gray-100 py-6 mt-auto">
-        <div className="max-w-6xl mx-auto px-4 flex items-center justify-between text-sm text-gray-500">
-          <span>©️ 2024 SpeakBetter, Inc. All rights reserved.</span>
-          <div className="space-x-4">
-            <Link href="/terms" className="hover:underline">
-              Terms
-            </Link>
-            <Link href="/privacy" className="hover:underline">
-              Privacy
-            </Link>
-            <Link href="/contact" className="hover:underline">
-              Contact
-            </Link>
-          </div>
-        </div>
-      </footer> */}
     </main>
   );
 }

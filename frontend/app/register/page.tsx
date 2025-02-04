@@ -3,38 +3,37 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/services/auth";
 
-// Пример простейшей проверки «надёжности» пароля:
-// можно усложнить по желанию.
+
 function validatePasswordStrength(password: string): string | null {
-  // 1) Минимальная длина
+
   if (password.length < 8) {
     return "Password must be at least 8 characters long.";
   }
-  // 2) Хотим минимум 1 цифру:
+
   if (!/\d/.test(password)) {
     return "Password must contain at least one digit.";
   }
-  // 3) Хотим минимум 1 спецсимвол (например, !@#$%^&*):
+
   if (!/[!@#$%^&*]/.test(password)) {
     return "Password must contain at least one special character (!@#$%^&*).";
   }
-  // 4) (Опционально) Хотим хотя бы одну заглавную букву:
+
   if (!/[A-Z]/.test(password)) {
     return "Password must contain at least one uppercase letter.";
   }
-  return null; // Всё ок
+  return null; //
 }
 
 export default function RegisterPage() {
   const router = useRouter();
 
-  // Поля формы
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // Сообщения
+
   const [info, setInfo] = useState("");
   const [error, setError] = useState("");
 
@@ -43,26 +42,25 @@ export default function RegisterPage() {
     setInfo("");
     setError("");
 
-    // 1) Проверяем, совпадают ли пароли
+
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
-    // 2) Проверяем «надёжность» пароля
+
     const pwError = validatePasswordStrength(password);
     if (pwError) {
       setError(pwError);
       return;
     }
 
-    // 3) Отправляем запрос
+
     try {
       await registerUser(username, password, email);
       // Успешно → показываем сообщение и тут же переходим на /login
       setInfo("User created. Please check your email for a confirmation link.");
       router.push("/check-email");
     } catch (err: any) {
-      // Если бэкенд вернёт ошибку (например, пользователь уже существует)
       setError(err.response?.data?.error || "Register error");
     }
   }
@@ -74,7 +72,6 @@ export default function RegisterPage() {
         rounded-lg
         shadow-md
         p-8">
-        {/* Заголовок с градиентом */}
         <h2
           className="
             text-center text-3xl font-greatvibes bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
@@ -83,8 +80,6 @@ export default function RegisterPage() {
         >
           Create an Account
         </h2>
-
-        {/* Сообщения об ошибках/информации */}
         {error && (
           <p className="text-red-600 dark:text-red-400 mb-2 text-center">
             {error}
@@ -97,7 +92,6 @@ export default function RegisterPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-          {/* Username */}
           <div>
             <input
               className="
@@ -113,8 +107,6 @@ export default function RegisterPage() {
               required
             />
           </div>
-
-          {/* Email */}
           <div>
             <input
               type="email"
@@ -131,8 +123,6 @@ export default function RegisterPage() {
               required
             />
           </div>
-
-          {/* Password */}
           <div>
             <input
               type="password"
@@ -149,8 +139,6 @@ export default function RegisterPage() {
               required
             />
           </div>
-
-          {/* Confirm Password */}
           <div>
             <input
               type="password"
@@ -180,8 +168,6 @@ export default function RegisterPage() {
             Register
           </button>
         </form>
-
-        {/* Ссылка «Already have an account? Login» */}
         <div className="mt-4 text-center">
           <span className="text-sm text-gray-600 dark:text-gray-300">
             Already have an account?{" "}

@@ -1,19 +1,13 @@
-
-
 "use client";
 import React from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 
-/**
- * Страница /account (краткий обзор личного кабинета),
- * оформленная в стиле "ExercisesIndexPage".
- */
+
 export default function AccountIndexPage() {
   const { user, isLoading } = useAuth();
 
-  // 1) Пока AuthContext грузит...
   if (isLoading) {
     return (
       <main className="flex flex-col min-h-screen">
@@ -46,7 +40,6 @@ export default function AccountIndexPage() {
     );
   }
 
-  // 2) Если не авторизован
   if (!user) {
     return (
       <main className="flex flex-col min-h-screen">
@@ -192,33 +185,6 @@ export default function AccountIndexPage() {
             </p>
           </Link>
         </motion.div>
-
-        {/* Карточка "Delete Account" (или что-то ещё) */}
-{/*         {<motion.div
-          key="delete-card"
-          whileHover={{ scale: 1.02 }}
-          className="
-            bg-white rounded-lg shadow p-6
-            flex flex-col
-            hover:shadow-lg transition-shadow
-            cursor-pointer
-          "
-        >
-          <Link href="/admin/dashboard" className="flex-1">
-            <h3
-              className="
-                text-xl font-semibold mb-2
-                bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
-                text-transparent bg-clip-text
-              "
-            >
-              Delete Account
-            </h3>
-            <p className="text-gray-700">
-              Permanently remove your data.
-            </p>
-          </Link>
-        </motion.div>} */}
       </section>
     </main>
   );

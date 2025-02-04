@@ -1,4 +1,3 @@
-# conversation/gpt_utils.py
 import os
 import openai
 from subscriptions.models import UserSubscription

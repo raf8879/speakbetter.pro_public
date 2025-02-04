@@ -1,4 +1,3 @@
-# subscriptions/utils.py
 from django.core.cache import cache
 
 

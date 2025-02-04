@@ -10,7 +10,6 @@ redis==5.2.1
 sqlparse==0.5.3
 tzdata==2024.2
 gunicorn
-
 annotated-types==0.7.0
 anyio==4.7.0
 certifi==2024.12.14
@@ -29,30 +28,11 @@ typing_extensions==4.12.2
 openai-whisper
 pyttsx3
 torch
-#TTS==0.15.1
-#textgrid
-
-#torch==2.0.1
-
-
 whitenoise
 TTS
-#g2p-en
-#torch
-#python-Levenshtein
 torchaudio
-
 django-cors-headers
-
-
 azure-cognitiveservices-speech
 requests
-#celery[redis]
-#celery[beat]
-# Указание репозитория для CPU-версий
-#torch==2.0.1+cpu
-#torchaudio==2.0.1+cpu
-#--extra-index-url https://download.pytorch.org/whl/cpu
-#TTS==0.15.1
-#TTS==0.25.1
+
 

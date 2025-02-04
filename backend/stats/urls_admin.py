@@ -1,4 +1,3 @@
-# stats/urls_admin.py
 from django.urls import path
 from .views_admin import AdminStatsView
 

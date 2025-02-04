@@ -1,24 +1,4 @@
 import pyttsx3
-
-# def text_to_speech(text: str, out_path: str):
-#     engine = pyttsx3.init()
-#     # engine.setProperty('rate', 150)  # если хотите поменять скорость
-#     engine.save_to_file(text, out_path)
-#     engine.runAndWait()
-
-
-# def text_to_speech(text: str, out_path: str):
-#     print("DEBUG: Entered text_to_speech with text=", text)
-#     engine = pyttsx3.init()
-#     print("DEBUG: engine created")
-#     engine.save_to_file(text, out_path)
-#     engine.runAndWait()
-#     print("DEBUG: runAndWait done")
-#     engine.stop()
-#     print("DEBUG: engine stopped")
-
-# tts_utils.py
-import pyttsx3
 import threading
 
 _lock = threading.Lock()

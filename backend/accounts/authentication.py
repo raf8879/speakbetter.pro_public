@@ -1,11 +1,7 @@
-# accounts/authentication.py
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class CustomCookieJWTAuthentication(JWTAuthentication):
-    """
-    1) Пытается достать access-токен из HTTP-only куки 'access_token'.
-    2) Если не находит - fallback на стандартный заголовок Authorization.
-    """
+
 
     def authenticate(self, request):
         cookie_token = request.COOKIES.get("access_token", None)

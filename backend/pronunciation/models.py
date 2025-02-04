@@ -1,8 +1,3 @@
-# pronunciation/models.py
-from django.db import models
-from django.conf import settings
-
-
 from django.db import models
 from django.conf import settings
 
@@ -49,10 +44,6 @@ class MispronouncedWord(models.Model):
     def __str__(self):
         return f"[Att={self.attempt.id}] {self.word} (acc={self.accuracy:.2f})"
 
-
-# models.py
-from django.db import models
-from django.conf import settings
 
 class MispronouncedWordGlobal(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

@@ -15,9 +15,6 @@ export default function ResetPasswordPage() {
   const [infoMsg, setInfoMsg] = useState("");
 
   useEffect(() => {
-    // В режиме `next export` код рендерится статически,
-    // но внутри браузера (после загрузки) `useEffect` сработает
-    // и мы сможем вытащить ?token=... из URL (client-side).
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       const t = url.searchParams.get("token") || "";
@@ -39,7 +36,6 @@ export default function ResetPasswordPage() {
     }
 
     try {
-      // вызываем confirmPasswordReset(token, password, passwordConfirm)
       const resp = await confirmPasswordReset(token, password, passwordConfirm);
       setInfoMsg(resp.message || "Password reset success. You can now login.");
     } catch (err: unknown) {
@@ -74,8 +70,6 @@ export default function ResetPasswordPage() {
         >
           Reset Your Password
         </h2>
-
-        {/* Ошибки / инфо */}
         {errorMsg && (
           <p className="text-red-600 dark:text-red-400 mb-2 text-center">
             {errorMsg}
@@ -135,8 +129,6 @@ export default function ResetPasswordPage() {
             Update Password
           </button>
         </form>
-
-        {/* Кнопка «Back to Login» (необязательно) */}
         <button
           onClick={() => router.push("/login")}
           className="

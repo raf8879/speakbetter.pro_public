@@ -1,4 +1,3 @@
-// frontend/services/adminStats.ts
 import { api } from "./api";
 
 export interface AdminStatsData {

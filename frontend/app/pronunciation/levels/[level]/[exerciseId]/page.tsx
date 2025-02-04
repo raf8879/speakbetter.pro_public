@@ -5,8 +5,6 @@ import dynamic from "next/dynamic";
 import { useAuth } from "@/context/AuthContext";
 import { useNotifications } from "@/context/NotificationsContext";
 import { api } from "@/services/api";
-
-// Динамический импорт ReactMediaRecorder, чтобы избежать проблем с SSR
 const ReactMediaRecorder = dynamic(
   () => import("react-media-recorder").then((mod) => mod.ReactMediaRecorder),
   { ssr: false }
@@ -14,8 +12,6 @@ const ReactMediaRecorder = dynamic(
 
 import ModalInsideCard from "@/components/ModalInsideCard";
 import CircleGauge from "@/components/CircleGauge";
-
-/** HoverTooltip: простой тултип при наведении. */
 
 
 function HoverTooltip({
@@ -48,10 +44,6 @@ function HoverTooltip({
         >
           {text}
           <div
-/*             className="
-              absolute top-full left-1/2 transform -translate-x-1/2
-              w-3 h-3 bg-gray-800 rotate-45
-            " */
           ></div>
         </div>
       )}
@@ -472,8 +464,6 @@ export default function PronunciationExercisePage() {
           );
         }}
       />
-
-      {/* Модалка (детали) */}
       {renderModal()}
     </div>
   );

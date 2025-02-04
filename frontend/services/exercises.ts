@@ -1,8 +1,3 @@
-
-
-// frontend/services/exercises.ts
-// frontend/services/exercises.ts
-// frontend/services/exercises.ts
 import { api } from "./api";
 
 // Тип

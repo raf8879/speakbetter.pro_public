@@ -4,13 +4,7 @@ from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 from .views_reset import ResetPasswordView
 from .views import RequestResetPasswordView
 from .views_delete import DeleteAccountView
-# urlpatterns = [
-#     path('register/', RegisterView.as_view(), name='register'),
-#     path('login/', LoginView.as_view(), name='login'),
-#     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-#     path('logout/', LogoutView.as_view(), name='logout'),
-#     path('verify/', TokenVerifyView.as_view(), name='token_verify'),
-# ]
+
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('me/', MeView.as_view(), name='me'),

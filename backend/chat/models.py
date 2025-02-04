@@ -1,17 +1,3 @@
-# from django.db import models
-# from django.conf import settings  # Нужно импортировать settings
-#
-#
-# class ChatContext(models.Model):
-#     # Вместо User используем settings.AUTH_USER_MODEL
-#     user = models.OneToOneField(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE
-#     )
-#     messages = models.JSONField(default=list)
-#
-#     def __str__(self):
-#         return f"ChatContext of {self.user.username}"
 from django.db import models
 from django.conf import settings
 

@@ -1,50 +1,22 @@
-3#accounts/view
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.core.cache import cache
-# from chat.models import ChatContext
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from .serializers import UserProfileSerializer
 from rest_framework import status, permissions
-User = get_user_model()
-
-
-# class MeView(APIView):
-#     """
-#     GET /api/auth/me/ - Возвращает информацию о текущем пользователе
-#     PATCH /api/auth/me/ - Обновляет поля (например, first_name, last_name, email).
-#     """
-#     permission_classes = [permissions.IsAuthenticated]
-#
-#     def get(self, request):
-#         user = request.user  # CustomUser
-#         ser = UserProfileSerializer(user)
-#         return Response(ser.data)
-#
-#     def patch(self, request):
-#         user = request.user
-#         ser = UserProfileSerializer(user, data=request.data, partial=True)
-#         if ser.is_valid():
-#             ser.save()
-#             return Response(ser.data)
-#         return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-###########################################
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 from django.conf import settings
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
-
 from .models import EmailConfirmation  # ← импорт вашей новой модели
 from .serializers import UserProfileSerializer  # если нужно
 from subscriptions.models import Plan, UserSubscription
+
+
 
 User = get_user_model()
 
@@ -71,14 +43,9 @@ class RegisterView(APIView):
             is_active=False
         )
 
-        # Присвоим план (по сигналу или вручную)
-        # ... (если у вас сигнал assign_free_plan — отлично, тогда автоматически)
-
-        # Создаём запись EmailConfirmation
         confirm_obj = EmailConfirmation.objects.create(user=user)
         token = str(confirm_obj.token)
 
-        # Формируем ссылку (FRONTEND_URL возьмите из .env или settings)
         frontend_url = getattr(settings, 'FRONTEND_URL', 'https://speakbetter.pro')
         verify_link = f"{frontend_url}/verify-email?token={token}"
 
@@ -111,17 +78,17 @@ class VerifyEmailView(APIView):
         if not token:
             return Response({"error": "No token provided"}, status=400)
 
-        # Пытаемся найти EmailConfirmation
+
         try:
             confirm = EmailConfirmation.objects.get(token=token)
         except EmailConfirmation.DoesNotExist:
             return Response({"error": "Invalid or expired token"}, status=400)
 
-        # Проверяем, не подтверждено ли уже
+
         if confirm.confirmed_at:
             return Response({"message": "Already confirmed"}, status=200)
 
-        # Помечаем user как active
+
         user = confirm.user
         user.is_active = True
         user.save()
@@ -131,80 +98,7 @@ class VerifyEmailView(APIView):
 
         return Response({"message": "Email verified! You can now login."}, status=200)
 
-#########################################
 
-
-# from rest_framework_simplejwt.tokens import RefreshToken
-# from django.contrib.auth import authenticate
-# from rest_framework.permissions import AllowAny
-#
-# class LoginView(APIView):
-#     permission_classes = [AllowAny]  # чтобы залогиниться без авторизации
-#
-#     def post(self, request):
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-#         if not username or not password:
-#             return Response({"error":"Username and password required"}, status=400)
-#
-#         user = authenticate(username=username, password=password)
-#         if not user:
-#             return Response({"error":"Invalid credentials"}, status=401)
-#
-#         # Создаём токен
-#         refresh = RefreshToken.for_user(user)
-#         access_token = str(refresh.access_token)
-#         refresh_token = str(refresh)
-#
-#         return Response({
-#             "access": access_token,
-#             "refresh": refresh_token,
-#             "message": f"Welcome, {user.username}!"
-#         }, status=200)
-
-
-
-from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
-from rest_framework_simplejwt.authentication import AUTH_HEADER_TYPES
-# from rest_framework_simplejwt.tokens import RefreshToken
-# from rest_framework.permissions import IsAuthenticated
-#
-# class LogoutView(APIView):
-#     permission_classes = [IsAuthenticated]
-#
-#     def post(self, request):
-#         try:
-#             # Можно взять refresh-токен из тела, или из заголовков
-#             refresh_token = request.data.get("refresh", None)
-#             if not refresh_token:
-#                 return Response({"error": "No refresh token provided."}, status=400)
-#             token = RefreshToken(refresh_token)
-#             token.blacklist()  # добавит в таблицу BlacklistedToken
-#             return Response({"message": "Logout success (refresh invalidated)."}, status=200)
-#         except Exception as e:
-#             return Response({"error": str(e)}, status=400)
-#######################################
-
-# accounts/views.py
-
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, permissions
-from django.conf import settings
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-
-# Для logout
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
-
-# Для user info
-from rest_framework.permissions import IsAuthenticated
-
-############################################
-# 1) LOGIN (получить токены → куки)
-############################################
 class CustomTokenObtainPairView(TokenObtainPairView):
     throttle_scope = 'login'
     """
@@ -246,9 +140,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         return response
 
 
-############################################
-# 2) REFRESH (обновить access-токен → куки)
-############################################
+
 class CustomTokenRefreshView(TokenRefreshView):
     """
     POST /api/token/refresh/
@@ -299,9 +191,7 @@ class CustomTokenRefreshView(TokenRefreshView):
         return response
 
 
-############################################
-# 3) LOGOUT (стереть куки, + optional blacklist)
-############################################
+
 class LogoutView(APIView):
     """
     POST /api/auth/logout/
@@ -325,9 +215,7 @@ class LogoutView(APIView):
         return response
 
 
-############################################
-# 4) ME (чтобы проверить user)
-############################################
+
 class MeView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -341,7 +229,6 @@ class MeView(APIView):
         }, status=200)
 
 
-from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import PasswordResetToken
 @api_view(["GET"])
@@ -352,17 +239,6 @@ def debug_cookies(request):
     })
 
 
-# accounts/views_reset.py
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from django.conf import settings
-from django.core.mail import send_mail
-from django.contrib.auth import get_user_model
-
-from .models import PasswordResetToken
-
-User = get_user_model()
-FRONTEND_URL = getattr(settings, 'FRONTEND_URL', 'https://speakbetter.pro')
 
 class RequestResetPasswordView(APIView):
     """
@@ -378,9 +254,7 @@ class RequestResetPasswordView(APIView):
         if not email:
             return Response({"error": "Email is required"}, status=400)
 
-        # Унифицируем ответ, чтобы не «выдавать»
-        # существует такой email или нет:
-        # "Мы отправили письмо, если пользователь зарегистрирован..."
+
         safe_response = {"message": "If the account exists, a reset link has been sent."}
 
         try:
@@ -389,7 +263,6 @@ class RequestResetPasswordView(APIView):
             # Не выдаём, что email не найден.
             return Response(safe_response, status=200)
 
-        # Если нашли user, создаём новый токен.
         reset_obj = PasswordResetToken.objects.create(user=user)
         reset_url = f"http://speakbetter.pro/reset-password?token={reset_obj.token}"
 
@@ -405,7 +278,6 @@ class RequestResetPasswordView(APIView):
         from_email = settings.DEFAULT_FROM_EMAIL
         recipient_list = [email]
 
-        # Попытка отправки
         try:
             send_mail(subject, message, from_email, recipient_list)
         except Exception as e:

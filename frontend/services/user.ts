@@ -1,4 +1,3 @@
-// services/user.ts
 import { api } from "./api";
 
 // GET /api/auth/me/

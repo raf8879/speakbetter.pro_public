@@ -1,34 +1,3 @@
-/* // components/Notifications.tsx
-"use client";
-
-import React from "react";
-import { useNotifications } from "@/context/NotificationsContext";
-
-export default function Notifications() {
-  const { notifications, removeNotification } = useNotifications();
-
-  return (
-    <div className="fixed top-4 right-4 space-y-2 z-50">
-      {notifications.map((notif) => (
-        <div
-          key={notif.id}
-          className={`p-3 rounded shadow-md text-white ${
-            notif.type === "success"
-              ? "bg-green-500"
-              : notif.type === "error"
-              ? "bg-red-500"
-              : "bg-blue-500"
-          }`}
-          onClick={() => removeNotification(notif.id)}
-        >
-          {notif.message}
-        </div>
-      ))}
-    </div>
-  );
-}
- */
-
 "use client";
 import React, { useEffect } from "react";
 import { useNotifications } from "@/context/NotificationsContext";

@@ -1,20 +1,14 @@
-# accounts/views_reset.py
+
 from rest_framework import status
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import PasswordResetToken
-class ResetPasswordView(APIView):
-    """
-    POST /api/auth/password-reset/confirm/
-    body: { "token": "UUID-string", "password": "...", "password_confirm": "..." }
 
-    Проверяем токен,
-    валидируем пароль,
-    сбрасываем (user.set_password),
-    отмечаем токен used.
-    """
+
+class ResetPasswordView(APIView):
+
     def post(self, request):
         token_str = request.data.get("token")
         new_password = request.data.get("password")

@@ -1,30 +1,3 @@
-# from rest_framework import serializers
-# from .models import Exercise
-#
-#
-# class ExerciseSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Exercise
-#         fields = ['id', 'title', 'text', 'level', 'exercise_type', 'creator', 'created_at']
-#         read_only_fields = ['creator', 'created_at']
-
-
-# exercises/serializers.py
-# from rest_framework import serializers
-# from .models import Exercise, ExerciseAttempt
-#
-# class ExerciseSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Exercise
-#         fields = ['id', 'title', 'text', 'level', 'exercise_type', 'creator', 'created_at']
-#         read_only_fields = ['creator', 'created_at']
-#
-# class ExerciseAttemptSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = ExerciseAttempt
-#         fields = ['id', 'user', 'exercise', 'score', 'created_at']
-#         read_only_fields = ['user', 'exercise', 'created_at']
-# exercises/serializers.py
 from rest_framework import serializers
 from .models import Exercise, ExerciseBlank, ExerciseAttempt
 

@@ -48,18 +48,6 @@ export default function SemiCircleGaugeTop({
   // Вычисляем длину дуги (полукруга)
   const R = (width - strokeWidth) / 2;
   const arcLength = Math.PI * R; // полукруг => π*R
-
-  // Меняем offset: от 0..arcLength
-  // При fraction=0 → offset=arcLength (пусто слева),
-  // при fraction=1 → offset=0 (полный полукруг).
-  // Но нам нужно наоборот, «при fraction=1» слева→направо.
-  // КАК РЕАЛИЗОВАТЬ?
-  // - Можно path ориентировать startAngle=180..endAngle=0.
-  //   Тогда dashOffset=(1-f)*arcLength
-  // Либо startAngle=0..endAngle=180 + dashOffset=f*arcLength
-  //   В зависимости от того, как path идёт.
-  //
-  // Допустим, выберем startAngle=0..180 (слева→направо), и offset = arcLength - fraction*arcLength = (1-f)*arcLength.
   const dashOffset = useTransform(fraction, (f) => (1 - f) * arcLength);
 
   // Цвет: красный→зелёный
@@ -75,10 +63,6 @@ export default function SemiCircleGaugeTop({
     }
   });
 
-  // Генерируем path (полукруг сверху)
-  // Углы: startAngle=0 (справа), endAngle=180 (слева)
-  // Но в системе координат SVG: 0° – это **направо**, 180° – **налево**,
-  // и отрисовка идёт по дуге сверху.
   const arcPath = useMemo(() => {
     return describeArc(width / 2, 0, R, 180, 360);
   }, [width, R]);
@@ -148,11 +132,6 @@ function describeArc(cx: number, cy: number, r: number, startAngle: number, endA
 /** перевод угла в радианы -> координаты на окружности */
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
   const rad = (angleDeg * Math.PI) / 180;
-  // В SVG:
-  //   angle=0 => точка (cx + r, cy) – это **правый** край
-  //   angle=90 => (cx, cy - r) – вверх
-  //   angle=180 => (cx - r, cy) – левый край
-  //   angle=270 => (cx, cy + r) – вниз
   return {
     x: cx + r * Math.cos(rad),
     y: cy + r * Math.sin(rad) * -1, 

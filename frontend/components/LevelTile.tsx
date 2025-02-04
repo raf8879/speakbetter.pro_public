@@ -1,4 +1,3 @@
-// components/LevelTile.tsx
 "use client";
 
 import React from "react";
@@ -8,7 +7,7 @@ import { useRouter } from "next/navigation";
 interface LevelTileProps {
   level: string;
   onClick?: (lvl:string)=>void; 
-  // или можно внутрь добавить link
+
 }
 
 export default function LevelTile({ level, onClick }: LevelTileProps) {

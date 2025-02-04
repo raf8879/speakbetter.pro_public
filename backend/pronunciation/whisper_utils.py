@@ -1,63 +1,7 @@
-# # pronunciation/whisper_utils.py
-# import whisper
-# import os
-#
-# # Загружаем модель (base)
-# WHISPER_MODEL = whisper.load_model("base")  # or "tiny", "small", etc.
-#
-# def transcribe_with_words(audio_path: str, language="en") -> dict:
-#     """
-#     Возвращает:
-#     {
-#       "text": "...",
-#       "words": [ { "word":"Hello", "start":0.5, "end":0.8}, ... ]
-#     }
-#     Используя "segment" timestamps, затем делим строки на слова (грубая логика).
-#     """
-#
-#     result = WHISPER_MODEL.transcribe(audio_path, language=language)
-#     # result["text"] = полная строка
-#     # result["segments"] = [{ "start":..., "end":..., "text":" Hello world"}...]
-#
-#     all_text = result["text"].strip()
-#     all_words = []
-#
-#     # Для каждого segment:
-#     for seg in result["segments"]:
-#         seg_text = seg["text"].strip()
-#         seg_start = seg["start"]
-#         seg_end   = seg["end"]
-#         # Разбиваем seg_text на слова
-#         words = seg_text.split()
-#         if not words:
-#             continue
-#         # Пример: segment length = seg_end - seg_start
-#         seg_len = seg_end - seg_start
-#         # Если N слов, каждое слово примерно seg_len / N
-#         # (это грубо)
-#         word_dur = seg_len / len(words)
-#         # Собираем
-#         current_start = seg_start
-#         for w in words:
-#             w_len = len(w)
-#             w_end = current_start + word_dur
-#             all_words.append({
-#                 "word": w,
-#                 "start": current_start,
-#                 "end": w_end,
-#             })
-#             current_start = w_end
-#
-#     return {
-#         "text": all_text,
-#         "words": all_words,
-#     }
-
-
 import whisper
 import os
 
-# Загружаем модель (base)
+
 WHISPER_MODEL = whisper.load_model("base.en")  # "tiny", "base", "small", etc.
 
 def transcribe_with_words(audio_path: str, language="en") -> dict:
